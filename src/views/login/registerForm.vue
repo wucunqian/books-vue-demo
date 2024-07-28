@@ -22,6 +22,7 @@ interface RuleForm {
   username: string;
   password: string;
 }
+const emit = defineEmits(['registerSuccessFun']);
 const formSize = ref<ComponentSize>('default');
 const ruleFormRef = ref<FormInstance>();
 const ruleForm = reactive<RuleForm>({
@@ -47,6 +48,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
           type: 'success',
           message: res.data.message
         });
+        emit('registerSuccessFun');
       }).catch(err => {
         ElMessage({
           grouping: true,

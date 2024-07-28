@@ -8,7 +8,7 @@
           <loginForm />
         </div>
         <div class="overlaylong-Signup" v-if="disfiex === 1">
-          <registerForm />
+          <registerForm @registerSuccessFun="Signup" />
         </div>
       </div>
       <div :class="overlaytitle">
