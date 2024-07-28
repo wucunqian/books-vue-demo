@@ -15,12 +15,12 @@
         <div class="overlaytitle-Signin" v-if="disfiex === 0">
           <h2 class="overlaytitleH2">你好,朋友 ！</h2>
           <p class="overlaytitleP">输入您的个人资料，与我们一起开始旅程！</p>
-          <div class="buttongohs" @click="Signin">注册</div>
+          <div class="buttongohs" @click="Signin">去注册</div>
         </div>
         <div class="overlaytitle-Signup" v-if="disfiex === 1">
           <h2 class="overlaytitleH2">欢迎回来！</h2>
           <p class="overlaytitleP">为了与我们保持联系，请注册您的用户！</p>
-          <div class="buttongohs" @click="Signup">登录</div>
+          <div class="buttongohs" @click="Signup">去登录</div>
         </div>
       </div>
     </div>

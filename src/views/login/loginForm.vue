@@ -17,11 +17,13 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue';
 import type { ComponentSize, FormInstance, FormRules } from 'element-plus';
+import { ElMessage } from 'element-plus';
+import { _loginapi } from '../../api/loginapi';
 const formSize = ref<ComponentSize>('default');
 const ruleFormRef = ref<FormInstance>();
 const ruleForm = reactive<RuleForm>({
-  username: '',
-  password: ''
+  username: '小吴',
+  password: '123456'
 });
 const rules = reactive<FormRules<RuleForm>>({
   username: [
@@ -36,7 +38,19 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   await formEl.validate((valid, fields) => {
     if (valid) {
-      console.log(11111111111);
+      _loginapi(ruleForm).then(res => {
+        ElMessage({
+          grouping: true,
+          type: 'success',
+          message: res.data.message
+        });
+      }).catch(err => {
+        ElMessage({
+          grouping: true,
+          type: 'warning',
+          message: err.response.data.message
+        });
+      });
     } else {
       console.log(fields);
     }

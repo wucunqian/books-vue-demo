@@ -16,6 +16,7 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue';
 import type { ComponentSize, FormInstance, FormRules } from 'element-plus';
+import { ElMessage } from 'element-plus';
 import { _registerapi } from '@/api/loginapi.ts';
 interface RuleForm {
   username: string;
@@ -41,7 +42,17 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   await formEl.validate((valid, fields) => {
     if (valid) {
       _registerapi(ruleForm).then(res => {
-        console.log(res);
+        ElMessage({
+          grouping: true,
+          type: 'success',
+          message: res.data.message
+        });
+      }).catch(err => {
+        ElMessage({
+          grouping: true,
+          type: 'warning',
+          message: err.response.data.message
+        });
       });
     } else {
       console.log(fields);
