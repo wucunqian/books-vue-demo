@@ -63,7 +63,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 };
 </script>
 
-<style lang="less" scoped>
+<style scoped lang="less">
 .overlaylong-Signin {
   display: flex;
   align-items: center;

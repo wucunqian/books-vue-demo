@@ -51,7 +51,7 @@ const Signup = () => {
 };
 </script>
 
-<style lang="less" scoped>
+<style scoped lang="less">
 // less 混入公共样式
 .mixincss-flex {
   display: flex;
