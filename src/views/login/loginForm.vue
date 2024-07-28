@@ -18,7 +18,9 @@
 import { reactive, ref } from 'vue';
 import type { ComponentSize, FormInstance, FormRules } from 'element-plus';
 import { ElMessage } from 'element-plus';
+import { useRouter } from 'vue-router';
 import { _loginapi } from '../../api/loginapi';
+const router = useRouter();
 const formSize = ref<ComponentSize>('default');
 const ruleFormRef = ref<FormInstance>();
 const ruleForm = reactive<RuleForm>({
@@ -44,6 +46,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
           type: 'success',
           message: res.data.message
         });
+        router.push('/homepage');
       }).catch(err => {
         ElMessage({
           grouping: true,
