@@ -18,6 +18,8 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.5.2",
     "globals": "^15.8.0",
+    "less": "^4.2.0",
+    "less-loader": "^12.2.0",
     "typescript": "^5.2.2",
     "vite": "^5.0.8",
     "vite-plugin-windicss": "^1.9.3",

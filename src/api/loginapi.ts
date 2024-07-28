@@ -1,5 +1,6 @@
 import { _post } from '@/utils/axios';
-const URL = 'http://127.0.0.1:3000';
+// 链接的电脑ip和端口
+const URL = 'http://10.1.2.237:3000';
 enum API {
   REGISTER_API = '/user/register'
 }

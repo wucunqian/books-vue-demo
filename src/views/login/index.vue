@@ -3,41 +3,21 @@
     <h1 class="title-h1">登录 / 注册</h1>
     <div class="logon">
       <div :class="overlaylong">
-        <div class="overlaylong-Signin" v-if="disfiex == 0">
-          <h2 class="overlaylongH2">登录</h2>
-          <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules" label-width="auto" class="demo-ruleForm"
-            :size="formSize" status-icon>
-            <el-form-item label="" prop="username">
-              <el-input v-model="ruleForm.username" placeholder="用户名" />
-            </el-form-item>
-            <el-form-item label="" prop="password">
-              <el-input v-model="ruleForm.password" placeholder="密码" />
-            </el-form-item>
-            <h3>忘记密码?</h3>
-            <el-button class="inupbutton" @click="submitForm(ruleFormRef)">登录</el-button>
-          </el-form>
+        <!-- 登录 -->
+        <div class="overlaylong-Signin" v-if="disfiex === 0">
+          <loginForm />
         </div>
-        <div class="overlaylong-Signup" v-if="disfiex == 1">
-          <h2 class="overlaylongH2">注册账户</h2>
-          <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules" label-width="auto" class="demo-ruleForm"
-            :size="formSize" status-icon>
-            <el-form-item label="" prop="username">
-              <el-input v-model="ruleForm.username" placeholder="用户名" />
-            </el-form-item>
-            <el-form-item label="" prop="password">
-              <el-input v-model="ruleForm.password" placeholder="密码" />
-            </el-form-item>
-            <el-button class="inupbutton" @click="submitForm(ruleFormRef)">注册</el-button>
-          </el-form>
+        <div class="overlaylong-Signup" v-if="disfiex === 1">
+          <registerForm />
         </div>
       </div>
       <div :class="overlaytitle">
-        <div class="overlaytitle-Signin" v-if="disfiex == 0">
+        <div class="overlaytitle-Signin" v-if="disfiex === 0">
           <h2 class="overlaytitleH2">你好,朋友 ！</h2>
           <p class="overlaytitleP">输入您的个人资料，与我们一起开始旅程！</p>
           <div class="buttongohs" @click="Signin">注册</div>
         </div>
-        <div class="overlaytitle-Signup" v-if="disfiex == 1">
+        <div class="overlaytitle-Signup" v-if="disfiex === 1">
           <h2 class="overlaytitleH2">欢迎回来！</h2>
           <p class="overlaytitleP">为了与我们保持联系，请注册您的用户！</p>
           <div class="buttongohs" @click="Signup">登录</div>
@@ -48,13 +28,10 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue';
+import { ref } from 'vue';
 import type { ComponentSize, FormInstance, FormRules } from 'element-plus';
-import { _registerapi } from '@/api/loginapi.ts';
-interface RuleForm {
-  username: string;
-  password: string;
-}
+import loginForm from './loginForm.vue';
+import registerForm from './registerForm.vue';
 let overlaylong = ref('overlaylong');
 let overlaytitle = ref('overlaytitle');
 let disfiex = ref(0);
@@ -72,54 +49,28 @@ const Signup = () => {
     disfiex.value = 0;
   }, 200);
 };
-const formSize = ref<ComponentSize>('default');
-const ruleFormRef = ref<FormInstance>();
-const ruleForm = reactive<RuleForm>({
-  username: '',
-  password: ''
-});
-const rules = reactive<FormRules<RuleForm>>({
-  username: [
-    { required: true, message: '请输入您的用户名', trigger: 'blur' }
-  ],
-  password: [
-    { required: true, message: '请输入您的密码', trigger: 'blur' },
-    { min: 6, max: 8, message: '密码长度为6到8', trigger: 'blur' },
-  ]
-});
-const submitForm = async (formEl: FormInstance | undefined) => {
-  if (!formEl) return;
-  await formEl.validate((valid, fields) => {
-    if (valid) {
-      _registerapi(ruleForm).then(res => {
-        console.log(res);
-      });
-    } else {
-      console.log(fields);
-    }
-  });
-};
-const resetForm = (formEl: FormInstance | undefined) => {
-  if (!formEl) return;
-  formEl.resetFields();
-};
 </script>
 
-<style scoped>
-/* 背景色 */
+<style lang="less" scoped>
+// less 混入公共样式
+.mixincss-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// 背景色
 .center {
   width: 100vw;
   height: 100vh;
   background-image: url('login-background.gif');
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  .mixincss-flex();
   flex-direction: column;
 }
 
-/* 标题颜色 */
+// 标题颜色 
 .title-h1 {
   font-size: 30px;
   color: #ccc;
@@ -144,9 +95,7 @@ const resetForm = (formEl: FormInstance | undefined) => {
   width: 50%;
   height: 100%;
   background-color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  .mixincss-flex();
 }
 
 .overlaylongleft {
@@ -156,9 +105,7 @@ const resetForm = (formEl: FormInstance | undefined) => {
   background-color: #fff;
   transform: translateX(100%);
   transition: transform 0.6s ease-in-out;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  .mixincss-flex();
 }
 
 .overlaylongright {
@@ -168,9 +115,7 @@ const resetForm = (formEl: FormInstance | undefined) => {
   background-color: #fff;
   transform: translateX(0%);
   transition: transform 0.6s ease-in-out;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  .mixincss-flex();
 }
 
 .overlaytitle {
@@ -178,11 +123,8 @@ const resetForm = (formEl: FormInstance | undefined) => {
   width: 50%;
   height: 100%;
   background-image: linear-gradient(to top, #5ee7df 0%, #b490ca 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  .mixincss-flex();
 }
-
 
 .overlaytitleH2 {
   padding: 20px;
@@ -198,43 +140,33 @@ const resetForm = (formEl: FormInstance | undefined) => {
   margin-top: 20px;
 }
 
-/* 卡片右 */
+// 卡片右
 .overlaytitleleft {
   border-radius: 0px 10px 10px 0px;
   width: 50%;
   height: 100%;
   background-image: linear-gradient(to top, #5ee7df 0%, #b490ca 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  .mixincss-flex();
   transform: translateX(0%);
   transition: transform 0.6s ease-in-out;
 }
 
-/* 卡片左 */
+// 卡片左
 .overlaytitleright {
   border-radius: 0px 10px 10px 0px;
   width: 50%;
   height: 100%;
   background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  .mixincss-flex();
   transform: translateX(-100%);
   transition: transform 0.6s ease-in-out;
 }
 
-.overlaytitle-Signin {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-
-.overlaytitle-Signup {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.overlaytitle-Signin,
+.overlaytitle-Signup,
+.overlaylong-Signin,
+.overlaylong-Signup {
+  .mixincss-flex();
   flex-direction: column;
 }
 
@@ -253,46 +185,5 @@ const resetForm = (formEl: FormInstance | undefined) => {
 .overlaylongH2 {
   font-size: 25px;
   color: black;
-}
-
-.demo-ruleForm {
-  margin: 20px;
-}
-
-.overlaylong-Signin {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-
-.overlaylong-Signup {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-
-h3 {
-  font-size: 10px;
-  margin-top: 10px;
-  cursor: pointer;
-}
-
-.inupbutton {
-  background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
-  border: none;
-  width: 180px;
-  height: 40px;
-  border-radius: 50px;
-  font-size: 15px;
-  color: #fff;
-  text-align: center;
-  line-height: 40px;
-  margin-top: 30px;
-}
-
-.el-input {
-  width: 260px;
 }
 </style>
