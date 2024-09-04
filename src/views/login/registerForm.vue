@@ -14,21 +14,21 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue';
-import type { ComponentSize, FormInstance, FormRules } from 'element-plus';
-import { ElMessage } from 'element-plus';
-import { _registerapi } from '@/api/loginapi.ts';
+import { reactive, ref } from 'vue'
+import type { ComponentSize, FormInstance, FormRules } from 'element-plus'
+import { ElMessage } from 'element-plus'
+import { _registerapi } from '@/api/loginapi.ts'
 interface RuleForm {
-  username: string;
-  password: string;
+  username: string
+  password: string
 }
-const emit = defineEmits(['registerSuccessFun']);
-const formSize = ref<ComponentSize>('default');
-const ruleFormRef = ref<FormInstance>();
+const emit = defineEmits(['registerSuccessFun'])
+const formSize = ref<ComponentSize>('default')
+const ruleFormRef = ref<FormInstance>()
 const ruleForm = reactive<RuleForm>({
   username: '',
   password: ''
-});
+})
 const rules = reactive<FormRules<RuleForm>>({
   username: [
     { required: true, message: '请输入您的用户名', trigger: 'blur' }
@@ -37,9 +37,9 @@ const rules = reactive<FormRules<RuleForm>>({
     { required: true, message: '请输入您的密码', trigger: 'blur' },
     { min: 6, max: 8, message: '密码长度为6到8', trigger: 'blur' },
   ]
-});
+})
 const submitForm = async (formEl: FormInstance | undefined) => {
-  if (!formEl) return;
+  if (!formEl) return
   await formEl.validate((valid, fields) => {
     if (valid) {
       _registerapi(ruleForm).then(res => {
@@ -47,20 +47,20 @@ const submitForm = async (formEl: FormInstance | undefined) => {
           grouping: true,
           type: 'success',
           message: res.data.message
-        });
-        emit('registerSuccessFun');
+        })
+        emit('registerSuccessFun')
       }).catch(err => {
         ElMessage({
           grouping: true,
           type: 'warning',
           message: err.response.data.message
-        });
-      });
+        })
+      })
     } else {
-      console.log(fields);
+      console.log(fields)
     }
-  });
-};
+  })
+}
 </script>
 
 <style scoped lang="less">
